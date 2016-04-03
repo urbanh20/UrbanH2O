@@ -22,11 +22,10 @@
 #top-nav {
     z-index: 1050;
     position: relative;
-    background-color: #D8D8D8;
     height: 75px;
 }
 
-#sidebar-wrapper {
+/*#sidebar-wrapper {
     z-index: 1000;
     position: fixed;
     left: 200px;
@@ -59,7 +58,7 @@
 
 /* Sidebar Styles */
 
-.sidebar-nav {
+/*.sidebar-nav {
     position: absolute;
     top: 25px;
     width: 200px;
@@ -131,4 +130,4 @@
         position: relative;
         margin-right: 0;
     }
-}
+}*/
