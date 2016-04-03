@@ -13,6 +13,7 @@ var config = require('./config/environment');
 var bodyParser = require('body-parser');
 var datetime = require('node-datetime');
 var dt = datetime.create();
+var geocoder = require('simple-geocoder');
 
 
 // Connect to database
@@ -62,26 +63,33 @@ app.get('/api', function (req, res) {
 
 //get form data from index,form and push it on to the database
 app.post('/form', function (req, res) {
-  var form_descrptor = req.body.descrptor;
+  var formdescrptor = req.body.descrptor;
   var addresses = req.body.addresses;
 
   //process addresses to lat and long
 
 //add time & data (04/03/2016 00:37:53)
-var form_time = dt.format('m/d/Y H:M:S');
+var formtime = dt.format('m/d/Y H:M:S');
 
-
-// var map2 = new mapdata({
-//     "Created Date": form_time,
-//     "Descriptor": form_descrptor,
-//     "Latitude": form_lat,
-//     "Longitude": form_long
-// });
-// map2.save(function(err) {
-//   if (err) throw err;
-//   console.log('saved form');
-// })
+geocoder.geocode(addresses, function(success, locations) {
+  if(success) {
+    var formlat = locations.y;
+    var formlong = locations.x;
+    console.log(locations);
+  }
+  var map2 = new mapdata({
+    "Created Date": formtime ,
+    "Descriptor": formdescrptor ,
+    "Latitude": formlat ,
+    "Longitude": formlong
+});
+map2.save(function(err) {
+  if (err) throw err;
+  console.log(map2);
+})
 res.send('it worked');
+});
+
 });
 
 
