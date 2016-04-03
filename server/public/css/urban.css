@@ -1,12 +1,33 @@
 html, body {
 	font-family: 'Montserrat', sans-serif;
-}
-
-.intro {
-	display: inline;
-	font-size: 18px;
+	margin: 0; 
+	padding: 0; 
+	height: 100%; 
+	overflow: hidden;
 }
 
 #logo img {
 	width: 275px;
+}
+
+#map {
+	position: absolute; 
+	left: 0px; right: 0px; bottom: 0px; top: 0px; 
+}
+
+#intro {
+	text-align: center;
+	font-size: 18px;
+	padding: 5%;
+}
+
+.btn-xlarge {
+    padding: 25px 25px;
+    font-size: 32px; //change this to your desired size
+    line-height: normal;
+    -webkit-border-radius: 8px;
+       -moz-border-radius: 8px;
+            border-radius: 8px;
+    background-color: #B8B8B8;
+    opacity: 0.9;
 }
