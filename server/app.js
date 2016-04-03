@@ -60,13 +60,6 @@ app.get('/api', function (req, res) {
 });
 
 
-app.get('/complaints', function (req, res) {
-  if(err) {
-  	res.json({info: 'error finding complaint'});
-  }
-});
-
-
 //get form data from index,form and push it on to the database
 app.post('/form', function (req, res) {
   var form_descrptor = req.body.descrptor;
