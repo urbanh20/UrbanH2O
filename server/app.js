@@ -11,6 +11,10 @@ var express = require('express');
 var mongoose = require('mongoose');
 var config = require('./config/environment');
 var bodyParser = require('body-parser');
+var datetime = require('node-datetime');
+var dt = datetime.create();
+var geocoder = require('simple-geocoder');
+
 
 // Connect to database
 mongoose.connect(config.mongo.uri, config.mongo.options);
@@ -19,6 +23,10 @@ mongoose.connection.on('error', function(err) {
 	process.exit(-1);
 	}
 );
+
+//add mapdata 
+var mapdata = require('./data/mapdata.js')
+
 // Populate DB with sample data
 if(config.seedDB) { require('./config/seed'); }
 
@@ -31,32 +39,58 @@ require('./routes')(app);
 //show the index page
 app.use(express.static(__dirname + '/public'));
 
-app.get('/map', function (req, res) {
-  res.sendFile(__dirname + '/public/map.html');
-});
-
 app.get('/form', function (req, res) {
   res.sendFile(__dirname + '/public/form.html');
 });
 
-app.get('/complaints', function (req, res) {
-  if(err) {
-  	res.json({info: 'error finding complaint'});
-  }
-  re
+// insert to database
+// var mapstart = require('./start.json');
+
+// for (var i = 0; i < mapstart.length; i++){
+//   var newMap = new mapdata(mapstart[i]);
+//   newMap.save(function(err) {
+//     if (err) throw err;
+//     console.log('saved default data');
+//   });
+// }
+
+app.get('/api', function (req, res) {
+  mongoose.model('mapdata').find(function(err, Descriptor, Created_Date, Status, Latitude, Longitude){
+    res.send(Descriptor, Created_Date, Status, Latitude, Longitude);
+  });
 });
 
 
 //get form data from index,form and push it on to the database
-app.post('/form.html', function (req, res) {
-  var firstName = req.body.firstname;
-  var lastName = req.body.lastname;
-  res.send(firstName + ' ' +lastName);
+app.post('/form', function (req, res) {
+  var formdescrptor = req.body.descrptor;
+  var addresses = req.body.addresses;
+
+  //process addresses to lat and long
+
+//add time & data (04/03/2016 00:37:53)
+var formtime = dt.format('m/d/Y H:M:S');
+
+geocoder.geocode(addresses, function(success, locations) {
+  if(success) {
+    var formlat = locations.y;
+    var formlong = locations.x;
+    console.log(locations);
+  }
+  var map2 = new mapdata({
+    "Created Date": formtime ,
+    "Descriptor": formdescrptor ,
+    "Latitude": formlat ,
+    "Longitude": formlong
+});
+map2.save(function(err) {
+  if (err) throw err;
+  console.log(map2);
+})
+res.send('it worked');
 });
 
-
-//show db information is csv.
-
+});
 
 
 // Start server
