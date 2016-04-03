@@ -29,3 +29,7 @@ html, body {
     background-color: #B8B8B8;
     opacity: 0.9;
 }
+
+.btn-md {
+	color: black;
+}
