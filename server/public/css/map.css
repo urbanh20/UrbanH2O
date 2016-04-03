@@ -2,9 +2,9 @@
 	position: absolute;
 	z-index: 2;
 	bottom: 0;
-	top: 0;
+	top: 10%;
 	right: 0;
-	left: 10%;
+	left: 0;
 	background-size: cover;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -13,13 +13,7 @@
 	-ms-filter: "progrid:DXImageTransform.Microsoft.AlphaImage(src='../img/overlay.png', sizingMethod='scale')";
 	pointer-events: none;
 }
-#logo{
-	position: absolute;
-	z-index: 0;
-	bottom: 0;
-	top: 0;
-	right: 0;
-	left: 350px;
-	background-color: #99BDBC;
 
+#logo img {
+	width: 275px;
 }
