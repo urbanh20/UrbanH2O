@@ -39,6 +39,14 @@ app.get('/form', function (req, res) {
   res.sendFile(__dirname + '/public/form.html');
 });
 
+app.get('/complaints', function (req, res) {
+  if(err) {
+  	res.json({info: 'error finding complaint'});
+  }
+  re
+});
+
+
 //get form data from index,form and push it on to the database
 app.post('/form.html', function (req, res) {
   var firstName = req.body.firstname;
