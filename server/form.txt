@@ -1,0 +1,18 @@
+Clear Water With Organisms (Insects, Worms) (QE2)
+Clear Water With Other Particles (Use Comments) (QEZ)
+Cloudy Or Milky Water (QB1)
+Cloudy Or Milky, Other (Use Comments) (QBZ)
+
+Oil, Grease In Water (QD1)
+
+Taste/Odor, Chlorine (QA1)
+Taste/Odor, Chemical (QA2)
+Taste/Odor, Bitter/Metallic (QA3)
+Taste/Odor, Musty/Stale (QA4)
+Taste/Odor, Sewer (QA5)
+unknown odor/taste in drinking water (QA6)
+
+Other Water Problem (Use Comments) (QZZ)
+
+Defective Water Sampling Station (QSS)
+No Sampling Required, Requested Information (QG2)
