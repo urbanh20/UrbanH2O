@@ -1,3 +1,8 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
 #overlay{
 	position: absolute;
 	z-index: 2;
@@ -12,6 +17,11 @@
 	filter: progrid:DXImageTransform.Microsoft.AlphaImage(src='.../img/overlay.png', sizingMethod='scale');
 	-ms-filter: "progrid:DXImageTransform.Microsoft.AlphaImage(src='../img/overlay.png', sizingMethod='scale')";
 	pointer-events: none;
+}
+
+#map {
+    margin: 0;
+    padding: 0;
 }
 
 #logo img {
