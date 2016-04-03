@@ -1,0 +1,12 @@
+html, body {
+	font-family: 'Montserrat', sans-serif;
+}
+
+.intro {
+	display: inline;
+	font-size: 18px;
+}
+
+#logo img {
+	width: 275px;
+}
