@@ -1,7 +1,3 @@
-/**
- * Main application file
- */
-
 'use strict';
 
 // Set default node environment to development
@@ -19,16 +15,15 @@ var geocoder = require('simple-geocoder');
 // Connect to database
 mongoose.connect(config.mongo.uri, config.mongo.options);
 mongoose.connection.on('error', function(err) {
-	console.error('MongoDB connection error: ' + err);
-	process.exit(-1);
-	}
-);
+    console.error('MongoDB connection error: ' + err);
+    process.exit(-1);
+});
 
 //add mapdata 
-var mapdata = require('./data/mapdata.js')
+var mapdata = require('./data/mapdata.js');
 
 // Populate DB with sample data
-if(config.seedDB) { require('./config/seed'); }
+if (config.seedDB) { require('./config/seed'); }
 
 // Setup server
 var app = express();
@@ -39,8 +34,8 @@ require('./routes')(app);
 //show the index page
 app.use(express.static(__dirname + '/public'));
 
-app.get('/form', function (req, res) {
-  res.sendFile(__dirname + '/public/form.html');
+app.get('/form', function(req, res) {
+    res.sendFile(__dirname + '/public/form.html');
 });
 
 // insert to database
@@ -54,48 +49,50 @@ app.get('/form', function (req, res) {
 //   });
 // }
 
-app.get('/api', function (req, res) {
-  mongoose.model('mapdata').find(function(err, Descriptor, Created_Date, Latitude, Longitude){
-    res.send(Descriptor, Created_Date, Latitude ,Longitude);
-  });
+app.get('/api', function(req, res) {
+    mongoose.model('mapdata').find(function(err, Descriptor, Created_Date, Latitude, Longitude) {
+        res.send(Descriptor, Created_Date, Latitude, Longitude);
+    });
 });
 
+app.get('/map', function(req, res) {
+        res.sendFile(__dirname + '/public/map.html');
+    })
+    //get form data from index,form and push it on to the database
+app.post('/form', function(req, res) {
+    var formdescriptor = req.body.descriptor;
+    var addresses = req.body.addresses;
 
+    //add time & data (04/03/2016 00:37:53)
+    var formtime = dt.format('m/d/Y H:M:S');
 
-
-//get form data from index,form and push it on to the database
-app.post('/form', function (req, res) {
-  var formdescrptor = req.body.descrptor;
-  var addresses = req.body.addresses;
-
-//add time & data (04/03/2016 00:37:53)
-var formtime = dt.format('m/d/Y H:M:S');
-
-geocoder.geocode(addresses, function(success, locations) {
-  if(success) {
-    var formlat = locations.y;
-    var formlong = locations.x;
-    console.log(locations);
-  }
-  var map2 = new mapdata({
-    "Created Date": formtime ,
-    "Descriptor": formdescrptor ,
-    "Latitude": formlat ,
-    "Longitude": formlong
-});
-map2.save(function(err) {
-  if (err) throw err;
-  console.log(map2);
-})
-res.send('it worked');
-});
+    geocoder.geocode(addresses, function(success, locations) {
+        var formlat;
+        var formlong;
+        if (success) {
+            formlat = locations.y;
+            formlong = locations.x;
+            console.log(locations);
+        }
+        var map2 = new mapdata({
+            "Created Date": formtime,
+            "Descriptor": formdescriptor,
+            "Latitude": formlat,
+            "Longitude": formlong
+        });
+        map2.save(function(err) {
+            if (err) throw err;
+            console.log(map2);
+        });
+        res.send('it worked');
+    });
 
 });
 
 
 // Start server
-server.listen(config.port, config.ip, function () {
-  console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
+server.listen(config.port, config.ip, function() {
+    console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
 });
 
 // Expose app

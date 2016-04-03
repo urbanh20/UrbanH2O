@@ -7,8 +7,8 @@
 var path = require('path');
 
 module.exports = function(app) {
-	
-  // Insert routes below
-  app.use('/api/things', require('./api/thing'));
+
+    // Insert routes below
+    app.use('/api/things', require('./api/thing'));
 
 };
